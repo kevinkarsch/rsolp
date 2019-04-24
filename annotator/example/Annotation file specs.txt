@@ -1,0 +1,65 @@
+Annotation file format (notes are enclosed in () and [])
+See the annotations.txt file for examples; the format is roughly like this:
+
+box (8 vertices of the box in image space)
+8
+[x1 y1]
+...
+[x8 y8]
+
+box3d (corresponding 3D locations of the box; obtained by back-projection i.e. box3d = (K*R)^{-1}*box)
+8
+[X1 Y1 Z1]
+...
+
+[X8 Y8 Z8]
+
+K
+[3x3 proj matrix as 9 row-wise values; e.g. focal 0 centerx 0 focal centery 0 0 1]
+
+R
+[3x3 rotation (extrinsic without translation since translation assumed to be 0)]
+
+light (area light source defined by a 2d polygon in the image)
+N (number of points in the light polygon)
+[x1 y1]
+...
+[xN yN]
+
+surface (extruded surface from the ground)
+M+2
+[x1 y1]
+...
+[xM yM]
+[x_top y_top] (point on the top of the object)
+[x_base y_base] (point beneath x_top y_top on the ground plane)
+[solid or surface] (0 = surface i.e. only extrude a plane from the ground; 1 = solid extrusion)
+
+You can have as many "light" and "surface" annotations as necessary.
+These annotations will make more sense also if you're familiar with the RSOLP creator tutorial videos (found in the help tab of the online creation tool: http://www.kevinkarsch.com/rsolp/create/).
+
+
+Coordinate systems:
+Object space (3D)
+
+y z    
+|/
+o--x
+
+Image space (2D)
+
+o--x
+|
+y
+
+Box corner indices corresponding to [x1 y1], ..., [x8 y8] above (not all corners must lie in the image; corners 5-8 and possibly others will usually be outside the image).
+6          7
+ \        /
+  \      /
+   2----3
+   |    |
+   |    |
+   1----4
+  /      \
+ /        \
+5          8

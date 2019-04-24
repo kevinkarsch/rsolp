@@ -1,0 +1,20 @@
+#! /bin/bash
+
+if [[ -n `ps -u root | grep rsolp_daemon` ]]
+then
+    killall rsolp_daemon
+    echo Stopped rsolp_daemon
+else
+    echo No running rsolp_daemon processes
+fi
+
+if [[ -n `ps -u root | grep rsolp_process` ]]
+then
+    killall rsolp_process_inbox
+    echo Stopped rsolp_process_inbox
+else
+    echo No running rsolp_process_inbox processes
+fi
+
+echo 
+

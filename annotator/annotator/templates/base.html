@@ -1,0 +1,41 @@
+{% load i18n %}{% load url from future %}<!doctype html>
+<html>
+<head>
+    <title>{% trans "Vision Research" %}</title>
+    <meta charset="utf-8" /> 
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/css/index.css" />
+    {% block css %}{% endblock %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+    {% block js %}{% endblock %}
+</head>
+<body>
+<h1>Vision Research</h1>
+    <div id="auth_bar">
+        {% url 'account_login' as login_url %}
+        {% url 'account_logout' as logout_url %}
+        {% url 'account_register' as register_url %}
+        {% if user.is_authenticated %}
+            <p>
+                {% blocktrans with request_path=request.path first_name=user.first_name  %}
+                Hey {{ first_name }}. (<a href="{{ logout_url }}?next={{ request_path }}">Not {{first_name}}?</a>)
+                {% endblocktrans %}
+            </p>
+        {% else %}
+            <p>
+                {% blocktrans with request_path=request.path %}
+                    <a href="{{ login_url }}?next={{request_path}}">Login</a> or <a href="{{ register_url }}">Join</a>
+                {% endblocktrans %}
+            </p>
+        {% endif %}
+    </div>
+    <hr/>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

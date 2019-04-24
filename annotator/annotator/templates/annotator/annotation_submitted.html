@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block css %}
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <p>Your request has been submitted. The result will be emailed to you when it is finished.</p>
+    <textarea id="id_annotation_text">
+        {{annotation_text}}
+    </textarea>
+{% endblock %}

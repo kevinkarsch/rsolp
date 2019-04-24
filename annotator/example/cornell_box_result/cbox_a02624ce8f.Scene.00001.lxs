@@ -1,0 +1,64 @@
+# Main Scene File
+
+Renderer "sampler"
+
+Sampler "metropolis"
+	"float largemutationprob" [0.400000005960464]
+	"bool usevariance" ["false"]
+
+Accelerator "qbvh"
+
+SurfaceIntegrator "bidirectional"
+	"integer eyedepth" [48]
+	"integer lightdepth" [48]
+
+VolumeIntegrator "multi"
+	"float stepsize" [1.000000000000000]
+
+PixelFilter "mitchell"
+	"bool supersample" ["true"]
+
+LookAt 0.000000 0.000000 0.000000 -0.000000 1.000000 0.000022 0.008667 -0.000022 0.999962
+
+Camera "perspective"
+	"float fov" [69.639939418911354]
+	"float screenwindow" [-0.998349773464724 1.001650226535276 -0.809604883193970 1.190395116806030]
+	"float shutteropen" [0.000000000000000]
+	"float shutterclose" [0.041666666666667]
+	"bool autofocus" ["true"]
+	"float hither" [5.996368885040283]
+	"float yon" [1000.000000000000000]
+
+Film "fleximage"
+	"integer xresolution" [512]
+	"integer yresolution" [512]
+	"float gamma" [2.200000000000000]
+	"float colorspace_white" [0.314275000000000 0.329411000000000]
+	"float colorspace_red" [0.630000000000000 0.340000000000000]
+	"float colorspace_green" [0.310000000000000 0.595000000000000]
+	"float colorspace_blue" [0.155000000000000 0.070000000000000]
+	"string filename" ["cbox_a02624ce8f.Scene.00001"]
+	"bool write_resume_flm" ["false"]
+	"bool restart_resume_flm" ["false"]
+	"bool write_exr_applyimaging" ["true"]
+	"bool write_exr" ["false"]
+	"bool write_png" ["true"]
+	"string write_png_channels" ["RGB"]
+	"bool write_tga" ["false"]
+	"string ldr_clamp_method" ["lum"]
+	"integer writeinterval" [10]
+	"integer haltspp" [500]
+	"string tonemapkernel" ["linear"]
+	"float linear_sensitivity" [320.000000000000000]
+	"float linear_exposure" [0.041666666666667]
+	"float linear_fstop" [2.799999952316284]
+	"float linear_gamma" [2.200000000000000]
+
+WorldBegin
+
+Include "cbox_a02624ce8f/Scene/00001/LuxRender-Materials.lxm"
+
+Include "cbox_a02624ce8f/Scene/00001/LuxRender-Geometry.lxo"
+
+Include "cbox_a02624ce8f/Scene/00001/LuxRender-Volumes.lxv"
+WorldEnd

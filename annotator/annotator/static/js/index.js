@@ -1,0 +1,140 @@
+$(document).ready(function(){
+    if(room === undefined){
+        alert("Image not loaded.");
+    }
+	
+	// Bounding Box
+	log("Init bounding box");
+	var kcanvas_3d_preview = new kCanvas($('#canvas-3d-preview')[0]);
+	var preview_handler = new PreviewHandler(kcanvas_3d_preview);
+	var kcanvas_bounding_box = new kCanvas($('#canvas-bounding-box')[0]);
+	kcanvas_bounding_box.loadImage(room);
+	var bounding_box_handler = new BoundingBoxHandler(kcanvas_bounding_box, preview_handler);
+	$('#update-anchor-link0').click(function(){ bounding_box_handler.updateAnchor(0); });
+	$('#update-anchor-link1').click(function(){ bounding_box_handler.updateAnchor(1); });
+	$('#update-anchor-link2').click(function(){ bounding_box_handler.updateAnchor(2); });
+	$('#update-anchor-link3').click(function(){ bounding_box_handler.updateAnchor(3); });
+	$('#update-depth-link').change(function(){ bounding_box_handler.updateRoomDepth(); });
+	$('#reset-corners-link').click(function(){ bounding_box_handler.resetCorners(); });
+	
+	// Light Sources
+	log("Init light source");
+	var kcanvas_light_sources = new kCanvas($('#canvas-light-sources')[0]);
+	kcanvas_light_sources.loadImage(room);
+	var light_source_handler = new LightSourceHandler(kcanvas_light_sources);
+	$('#add-light-source-link').click(function(){
+		light_source_handler.addLightSource();
+	});
+	
+	// Light Shafts
+	log("Init light shafts");
+	var kcanvas_light_shafts = new kCanvas($('#canvas-light-shafts')[0]);
+	kcanvas_light_shafts.loadImage(room);
+	var light_shaft_handler = new LightShaftHandler(kcanvas_light_shafts);
+	$('#shaft2d-input-link').click(function(){ light_shaft_handler.setShaftInput2D(); });
+	$('#shaft3d-input-link').click(function(){ light_shaft_handler.setShaftInput3D(); });
+	$('#shaft3d-phi-link').change(function(){ light_shaft_handler.updateShaftAngle(); });
+	$('#shaft3d-theta-link').change(function(){ light_shaft_handler.updateShaftAngle(); });
+	$('#add-light-shaft-link').click(function(){ light_shaft_handler.addLightShaft(); });
+	
+	// Surfaces
+	log("Init surfaces");
+	var kcanvas_surfaces = new kCanvas($('#canvas-surfaces')[0]);
+	kcanvas_surfaces.loadImage(room);
+	var surface_handler = new SurfaceHandler(kcanvas_surfaces);
+	$('#add-surface-link').click(function(){
+		surface_handler.addSurface();
+	});
+	
+	log("Init results");
+	
+	$("#tabs").tabs({
+		select: function(event, ui){
+			var tab_id = ui.tab.href.split("#")[1];
+			if(tab_id === "tabs-result"){
+				$('#id_annotation_text').val(aggregateResult());
+			}
+		}
+	});
+	
+	function aggregateResult(){
+		var output = "";
+	
+		// Bounding Box
+		output += "box\n";
+		output += "8\n";
+		$(bounding_box_handler.box_points).each(function(k, v){
+			output += "   " + v.x + " " + v.y + "\n";
+		});
+		output += "\n";
+		
+		output += "box3d\n";
+		output += "8\n";
+		$(bounding_box_handler.box_points3d).each(function(k, v){
+			output += "   " + v.x + " " + v.y + " " + v.z + "\n";
+		});
+		output += "\n";
+		
+		output += "K\n" + "   ";
+		output += bounding_box_handler.K.r1.x + " " + bounding_box_handler.K.r1.y + " " + bounding_box_handler.K.r1.z + " ";
+		output += bounding_box_handler.K.r2.x + " " + bounding_box_handler.K.r2.y + " " + bounding_box_handler.K.r2.z + " ";
+		output += bounding_box_handler.K.r3.x + " " + bounding_box_handler.K.r3.y + " " + bounding_box_handler.K.r3.z + "\n";
+		output += "\n";
+		
+		output += "R\n" + "   ";
+		output += bounding_box_handler.R.r1.x + " " + bounding_box_handler.R.r1.y + " " + bounding_box_handler.R.r1.z + " ";
+		output += bounding_box_handler.R.r2.x + " " + bounding_box_handler.R.r2.y + " " + bounding_box_handler.R.r2.z + " ";
+		output += bounding_box_handler.R.r3.x + " " + bounding_box_handler.R.r3.y + " " + bounding_box_handler.R.r3.z + "\n";
+		output += "\n";
+		
+		// Light sources
+		$(light_source_handler.lightsources).each(function(lsk,ls){
+			output += "light\n";
+			output += ls.polygon.vertices.length + "\n";
+			$(ls.polygon.vertices).each(function(vk,v){
+				output += "   " + v.x  + " " + v.y + "\n";
+			});
+			output += "\n";
+		});
+		
+		// Light shafts
+		if(light_shaft_handler.shaftInputType == light_shaft_handler.shaftInputEnum.twoD) {
+			output += "shaft_2d_source\n";
+			output += "   " + light_shaft_handler.shaftSource2D.y + " " + light_shaft_handler.shaftSource2D.x + "\n";
+		} else {
+			output += "shaft_angle\n";
+			output += "   " + light_shaft_handler.shaftAngle3D.x + " " + light_shaft_handler.shaftAngle3D.y + "\n";
+		}
+		output += "\n";
+		$(light_shaft_handler.lightshafts).each(function(lsk,ls){
+			output += "shaft\n";
+			output += ls.polygon.vertices.length + "\n";
+			$(ls.polygon.vertices).each(function(vk,v){
+				output += "   " + v.x  + " " + v.y + "\n";
+			});
+			output += ls.matte_shaft + "\n";
+			output += "\n";
+		});
+		
+		// Surfaces
+		$(surface_handler.surfaces).each(function(sk, s){
+			output += "surface\n";
+			output += (s.polygon.vertices.length + 2) + "\n";
+			var centroid = s.polygon.vertices[0];
+			var heightAbsolute = centroid.plus(s.height);
+			var allPoints = [].concat(s.polygon.vertices, [centroid, heightAbsolute]);
+			$(allPoints).each(function(vk, v){
+				output += "   " + v.x + " " + v.y + "\n";
+			});
+			output += s.solid + "\n";
+			output += "\n";
+		});
+		
+		return output;
+	}
+});
+
+function log(msg){
+	console.log(msg);
+}
+

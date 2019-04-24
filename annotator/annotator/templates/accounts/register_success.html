@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Thanks for joining, {{ request.session.user.first_name }}.</p>
+    <p>Please check your email ({{ request.session.user.email }}) to activate your account.</p>
+{% endblock %}

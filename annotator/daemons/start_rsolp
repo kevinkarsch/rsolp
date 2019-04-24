@@ -1,0 +1,16 @@
+#! /bin/bash
+
+MATLAB_DIR='/srv/rsolp/rsolp/src/matlab'
+
+if [[ -n `ps -u root | grep 'rsolp_daemon\|rsolp_process'` ]]
+then
+    ${MATLAB_DIR}/stop_rsolp
+fi
+
+rm -f ${MATLAB_DIR}/rsolp_daemon.log ${MATLAB_DIR}/rsolp_daemon.err
+cd ${MATLAB_DIR}
+nohup nice ./rsolp_daemon > ./rsolp_daemon.log 2> ./rsolp_daemon.err < /dev/null &
+
+echo Started rsolp_daemon
+echo 
+

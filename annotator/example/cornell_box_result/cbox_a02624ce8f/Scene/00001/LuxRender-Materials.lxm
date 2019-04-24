@@ -1,0 +1,252 @@
+# Materials File
+
+Texture "sceneTex_color" "color" "imagemap"
+	"string filename" ["textures/cbox_a02624ce8f-reflectance.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+MakeNamedMaterial "sceneMat"
+	"texture Kd" ["sceneTex_color"]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "light3Mat"
+	"color Kd" [0.63999999 0.63999999 0.63999999]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "light2Mat"
+	"color Kd" [0.63999999 0.63999999 0.63999999]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "light1Mat"
+	"color Kd" [0.63999999 0.63999999 0.63999999]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+Texture "backTexTransp_float" "float" "imagemap"
+	"string filename" ["textures/backTransp.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+Texture "backTexTransp_float_alpha" "float" "mix"
+	"float tex1" [1.000000000000000]
+	"float tex2" [0.000000000000000]
+	"texture amount" ["backTexTransp_float"]
+
+Texture "backTex_color" "color" "imagemap"
+	"string filename" ["textures/back.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+MakeNamedMaterial "backMat_null"
+	"string type" ["null"]
+
+MakeNamedMaterial "backMat_base"
+	"texture Kd" ["backTex_color"]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "backMat"
+	"string namedmaterial1" ["backMat_null"]
+	"string namedmaterial2" ["backMat_base"]
+	"texture amount" ["backTexTransp_float_alpha"]
+	"string type" ["mix"]
+
+Texture "botTexTransp_float" "float" "imagemap"
+	"string filename" ["textures/botTransp.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+Texture "botTexTransp_float_alpha" "float" "mix"
+	"float tex1" [1.000000000000000]
+	"float tex2" [0.000000000000000]
+	"texture amount" ["botTexTransp_float"]
+
+Texture "botTex_color" "color" "imagemap"
+	"string filename" ["textures/bot.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+MakeNamedMaterial "botMat_null"
+	"string type" ["null"]
+
+MakeNamedMaterial "botMat_base"
+	"texture Kd" ["botTex_color"]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "botMat"
+	"string namedmaterial1" ["botMat_null"]
+	"string namedmaterial2" ["botMat_base"]
+	"texture amount" ["botTexTransp_float_alpha"]
+	"string type" ["mix"]
+
+Texture "rightTexTransp_float" "float" "imagemap"
+	"string filename" ["textures/rightTransp.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+Texture "rightTexTransp_float_alpha" "float" "mix"
+	"float tex1" [1.000000000000000]
+	"float tex2" [0.000000000000000]
+	"texture amount" ["rightTexTransp_float"]
+
+Texture "rightTex_color" "color" "imagemap"
+	"string filename" ["textures/right.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+MakeNamedMaterial "rightMat_null"
+	"string type" ["null"]
+
+MakeNamedMaterial "rightMat_base"
+	"texture Kd" ["rightTex_color"]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "rightMat"
+	"string namedmaterial1" ["rightMat_null"]
+	"string namedmaterial2" ["rightMat_base"]
+	"texture amount" ["rightTexTransp_float_alpha"]
+	"string type" ["mix"]
+
+Texture "topTexTransp_float" "float" "imagemap"
+	"string filename" ["textures/topTransp.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+Texture "topTexTransp_float_alpha" "float" "mix"
+	"float tex1" [1.000000000000000]
+	"float tex2" [0.000000000000000]
+	"texture amount" ["topTexTransp_float"]
+
+Texture "topTex_color" "color" "imagemap"
+	"string filename" ["textures/top.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+MakeNamedMaterial "topMat_null"
+	"string type" ["null"]
+
+MakeNamedMaterial "topMat_base"
+	"texture Kd" ["topTex_color"]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "topMat"
+	"string namedmaterial1" ["topMat_null"]
+	"string namedmaterial2" ["topMat_base"]
+	"texture amount" ["topTexTransp_float_alpha"]
+	"string type" ["mix"]
+
+Texture "leftTexTransp_float" "float" "imagemap"
+	"string filename" ["textures/leftTransp.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+Texture "leftTexTransp_float_alpha" "float" "mix"
+	"float tex1" [1.000000000000000]
+	"float tex2" [0.000000000000000]
+	"texture amount" ["leftTexTransp_float"]
+
+Texture "leftTex_color" "color" "imagemap"
+	"string filename" ["textures/left.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+MakeNamedMaterial "leftMat_null"
+	"string type" ["null"]
+
+MakeNamedMaterial "leftMat_base"
+	"texture Kd" ["leftTex_color"]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "leftMat"
+	"string namedmaterial1" ["leftMat_null"]
+	"string namedmaterial2" ["leftMat_base"]
+	"texture amount" ["leftTexTransp_float_alpha"]
+	"string type" ["mix"]
+
+Texture "midTexTransp_float" "float" "imagemap"
+	"string filename" ["textures/midTransp.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+Texture "midTexTransp_float_alpha" "float" "mix"
+	"float tex1" [1.000000000000000]
+	"float tex2" [0.000000000000000]
+	"texture amount" ["midTexTransp_float"]
+
+Texture "midTex_color" "color" "imagemap"
+	"string filename" ["textures/mid.png"]
+	"float gamma" [2.200000000000000]
+	"string mapping" ["uv"]
+	"float udelta" [0.000000000000000]
+	"float uscale" [1.000000000000000]
+	"float vscale" [-1.000000000000000]
+	"float vdelta" [0.000000000000000]
+
+MakeNamedMaterial "midMat_null"
+	"string type" ["null"]
+
+MakeNamedMaterial "midMat_base"
+	"texture Kd" ["midTex_color"]
+	"float sigma" [0.000000000000000]
+	"string type" ["matte"]
+
+MakeNamedMaterial "midMat"
+	"string namedmaterial1" ["midMat_null"]
+	"string namedmaterial2" ["midMat_base"]
+	"texture amount" ["midTexTransp_float_alpha"]
+	"string type" ["mix"]

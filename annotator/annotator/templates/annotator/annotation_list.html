@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block css %}
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <table class="annotation_list">
+        {% for annotation in object_list %}
+        <tr>
+            <td class="annotation_id">{{ annotation.id }}</td>
+            <td class="annotation_title">
+                <a href="{% url 'annotation_canvas_view' pk=annotation.id %}">{{ annotation.title }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

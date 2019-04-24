@@ -1,0 +1,7 @@
+{% load url from future %}
+
+<p>Hey {{ user.first_name }},</p>
+
+<p>You are almost done! Just one more click and you are off.<p/>
+
+<p>Click <a href="{{ SITE_URL }}{% url 'account_activate' activation_key %}">here</a> to activate your account.</p>

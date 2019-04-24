@@ -1,0 +1,12 @@
+#! /bin/bash
+
+MATLAB_DIR='/srv/rsolp/rsolp/src/matlab'
+
+while : ; do
+        echo
+        echo `date`" ... rsolp background process started"
+        ${MATLAB_DIR}/rsolp_process_inbox 1>/dev/null 2>/dev/null
+        echo
+        echo `date`" ... rsolp terminated"
+done
+

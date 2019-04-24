@@ -1,0 +1,47 @@
+#! /bin/bash
+
+#Run this script in the background with:
+#   nohup nice sudo ./rsolp_daemon.sh > ./rsolp_daemon.log 2> ./rsolp_daemon.err < /dev/null &
+
+PROJECT_DIR='/srv/rsolp/rsolp/src/inbox/'
+OUTPUT_DIR='/srv/rsolp/rsolp/src/outbox/'
+WEB_DIR='http://vision-app1.cs.uiuc.edu:8080/result'
+LOG_DIR='/srv/rsolp/rsolp/src/log/'
+MATLAB_DIR='/srv/rsolp/rsolp/src/matlab'
+FAIL_DIR='/srv/rsolp/rsolp/src/fail'
+
+while [ true ]
+do
+	find ${OUTPUT_DIR}/* -mtime +7 -exec rm {} \; #Remove processed files older than 7 days
+	find ${LOG_DIR}/* -mtime +7 -exec rm {} \; #Remove log files older than 7 days
+	project=`ls -tr ${PROJECT_DIR} | head -1`; #Get oldest result not yet processed
+	if [ -n "${project}" ]
+	then
+		(${MATLAB_DIR}/run_createBlenderScene.sh /opt/MATLAB/MATLAB_Compiler_Runtime/v79/ ${PROJECT_DIR}/${project} 2>&1) > ${LOG_DIR}/${project}.txt #Run matlab code, store logs
+		rm -f ${PROJECT_DIR}/${project}/out/*.py #Remove bpy script
+		email_add=`head -n 1 ${PROJECT_DIR}/${project}/user.txt`; #Read in email address associated with project
+		
+		#cp ${PROJECT_DIR}/${project}/annotations.txt ${PROJECT_DIR}/${project}/out/annotations.txt #debug
+
+		CUR_DIR=`pwd`
+		cd ${PROJECT_DIR}/${project};
+		mv out ${project};
+		cp ${MATLAB_DIR}/RM_BLEND.txt ${project}/README.txt;
+		zip -r ${OUTPUT_DIR}/${project}.zip ${project}; #zip processed dir
+		cd ${CUR_DUR}		
+	
+		if [ -e ${OUTPUT_DIR}/${project}.zip ]
+		then	
+			rm -rf "${PROJECT_DIR}/${project}"; #Clear processed dir
+			email_link="${WEB_DIR}/${project}.zip"; #Link to zip file on server
+			#Send email with result link
+			echo -e "Your project has been processed and can be downloaded here:\n\n${email_link}\n\nThis link will remain active for 7 days." | mailx -aFrom:rsolp_noreply@vision.cs.uiuc.edu -s "[RSOLP] Project ${project} complete" -t ${email_add}
+		else
+			mv "${PROJECT_DIR}/${project}" "${FAIL_DIR}/"
+			echo -e "For some reason, the scene you created was not able to be processed. A bug report has been automatically generated, and we are working to fix this issue. Sorry for the inconvenience, and we appreciate your patience." | mailx -aFrom:rsolp_noreply@vision.cs.uiuc.edu -s "[RSOLP] Project ${project} failed" -t ${email_add}
+		fi
+	else
+		sleep 1; #Sleep if no projects left to process
+	fi
+done
+

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Compositor">
+        <file>icons/open.png</file>
+        <file>icons/refresh.png</file>
+        <file>scripts/getObjectMask.py</file>
+        <file>scripts/writeRenderFiles.py</file>
+    </qresource>
+</RCC>

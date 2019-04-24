@@ -1,0 +1,24 @@
+0) Ensure Qt4 is installed and qmake is in your path (Qt 4.8.0 recommended).
+
+1a) Compiling on Windows (using Visual Studio's cl and nmake):
+	Open a command prompt and cd to your visual studio C directory, e.g.:
+		cd "C:\Program Files (x86)\Microsoft Visual Studio [10.0]\VC"
+		(where [10.0] is replaced by whichever version of Visual Studio you have).
+	To put nmake and cl in your path, run the vsvarsall.bat script by typing:
+		vcvarsall.bat
+	Next, cd to the directory containing this file (INSTALL.txt) and type:
+		qmake
+		nmake release
+	
+1b) Compiling on Unix (assuming g++ and make are installed):
+	From a terminal, cd to the directory containing this file (INSTALL.txt) and type:
+		qmake
+		make
+
+1) Compiling on MacOS X:
+	From a terminal, cd to the directory containing this file (INSTALL.txt) and type:
+		qmake -spec macx-g++
+		make
+		
+2) That's it! You should end up with an exe/binary/bundle named "Compositor" 
+	(if compiled on Windows, it will be in the release/ directory).
