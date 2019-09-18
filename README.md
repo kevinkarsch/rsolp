@@ -30,7 +30,7 @@ Typically, b is the original image that an object is to be inserted into, e is t
 
 Put simply, the compositing equation takes pixels from the rendered image and “pastes” them onto the background image (as defined by the mask). The final term in the equation also adds any light interplay between inserted objects and the scene to the final composite, such as shadows and interreflections.
 
-####Creating the empty, render, and mask images
+#### Creating the empty, render, and mask images
 If you are using Blender and LuxRender (and the Blender+LuxRender exporter, LuxBlend25), this software can also be used to help generate the empty, render, and mask images. We have tested these instructions using Blender 2.58a and LuxRender 0.8, although other versions may also work. All scenes created using the RSOLP Annotator should be compatible with the following workflow (assuming Blender, LuxRender, and LuxBlend are installed):
 
 1. Important: Currently, you must also have PyLux installed and enabled, which allows for LuxRendering within Blender. For (most) recent installations, PyLux is installed with LuxBlend and LuxRender, and all you need to do is enable PyLux within Blender. To enable Pylux:
